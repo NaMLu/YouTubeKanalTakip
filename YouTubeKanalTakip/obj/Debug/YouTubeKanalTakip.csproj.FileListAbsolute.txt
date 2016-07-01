@@ -47,3 +47,4 @@ C:\Users\Oğuzhan Şahin\documents\visual studio 2015\Projects\YouTubeKanalTakip
 C:\Users\Oğuzhan Şahin\documents\visual studio 2015\Projects\YouTubeKanalTakip\YouTubeKanalTakip\obj\Debug\YouTubeKanalTakip.KanalDetay.resources
 C:\Users\Oğuzhan Şahin\documents\visual studio 2015\Projects\YouTubeKanalTakip\YouTubeKanalTakip\obj\Debug\YouTubeKanalTakip.HakkimdaForm.resources
 C:\Users\Oğuzhan Şahin\documents\visual studio 2015\Projects\YouTubeKanalTakip\YouTubeKanalTakip\obj\Debug\YouTubeKanalTakip.topluKanalEkleForm.resources
+C:\Users\Oğuzhan Şahin\documents\visual studio 2015\Projects\YouTubeKanalTakip\YouTubeKanalTakip\obj\Debug\YouTubeKanalTakip.kanallariGuncelleForm.resources

@@ -47,6 +47,17 @@ namespace YouTubeKanalTakip
             }
         }
 
+        public int toplamVideo(String id)
+        {
+            var kanalBilgileri = youtubeServis.PlaylistItems.List("snippet");
+            kanalBilgileri.PlaylistId = id;
+            kanalBilgileri.MaxResults = 5;
+
+            var sonuc = kanalBilgileri.Execute();
+
+            return Convert.ToInt32(sonuc.PageInfo.TotalResults);
+        }
+
         public bool kanalEkle(bool idMi, string veri)
         {
             var kanalBilgileri = youtubeServis.Channels.List("snippet,contentDetails,statistics,status");

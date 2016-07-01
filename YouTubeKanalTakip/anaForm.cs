@@ -81,10 +81,10 @@ namespace YouTubeKanalTakip
             foreach(DataRow dr in tablo.Rows)
             {
                 ListViewItem item = new ListViewItem();
+
                 long hit = Convert.ToInt64(dr["kanal_hit"]);
                 long abone = Convert.ToInt64(dr["kanal_abone"]);
                 long video = Convert.ToInt64(dr["kanal_video"]);
-
 
                 item.Tag = dr["kanal_resim"].ToString();
                 item.SubItems.Add(dr["kanal_adi"].ToString());
@@ -175,18 +175,26 @@ namespace YouTubeKanalTakip
 
         private void kanalıSilToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ListViewItem item = kanallarListView.SelectedItems[0];
-            string id = item.SubItems[2].Text;
-
-            if(vt.KanalSil(id))
+            if (DialogResult.Yes == MessageBox.Show("Kanalı silmek üzeresiniz işleme devam etmek istiyor musunuz ?","Uyarı !",MessageBoxButtons.YesNo,MessageBoxIcon.Information))
             {
-                Thread kanalListeYenile = new Thread(KanalListesiYenile);
-                kanalListeYenile.IsBackground = true;
-                kanalListeYenile.Start();
+
+                ListViewItem item = kanallarListView.SelectedItems[0];
+                string id = item.SubItems[2].Text;
+
+                if (vt.KanalSil(id))
+                {
+                    Thread kanalListeYenile = new Thread(KanalListesiYenile);
+                    kanalListeYenile.IsBackground = true;
+                    kanalListeYenile.Start();
+                }
+                else
+                {
+                    durumLabel.Text = "Kanal silinemedi.";
+                }
             }
             else
             {
-                durumLabel.Text = "Kanal silinemedi.";
+                MessageBox.Show("Kanal silme işleminden vazgeçildi.","Uyarı !",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -240,48 +248,8 @@ namespace YouTubeKanalTakip
 
         private void kanallarıGüncelleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Thread th = new Thread(TumKanallarGuncelle);
-            th.IsBackground = true;
-            th.Start();
-        }
-
-        private void TumKanallarGuncelle()
-        {
-            DataTable kanallar = vt.kanallarListesi();
-
-            foreach (DataRow dr in kanallar.Rows)
-            {
-                string id = dr["kanal_id"].ToString();
-                durumLabel.Text = id + " kanalın temel bilgileri güncelleniyor.";
-
-                if (yt.kanalEkle(true, id))
-                {
-                    int kanal = Convert.ToInt32(dr["kanal_kimlik"]);
-                    string upload = dr["kanal_upload"].ToString();
-
-                    DataTable videolar = yt.videolariGetir(upload);
-
-                    foreach (DataRow satir in videolar.Rows)
-                    {
-                        string vid = satir["id"].ToString();
-
-                        if (yt.videoEkle(vid, kanal))
-                        {
-                            durumLabel.Text = vid + " video güncellendi.";
-                        }
-                        else
-                        {
-                            durumLabel.Text = vid + " video güncellenemedi.";
-                        }
-
-                        Thread.Sleep(1);
-                    }
-                }
-
-                Thread.Sleep(1);
-            }
-
-            durumLabel.Text = "Tüm kanallar güncellendi.";
+            kanallariGuncelleForm form = new kanallariGuncelleForm();
+            form.ShowDialog();
         }
     }
 }
