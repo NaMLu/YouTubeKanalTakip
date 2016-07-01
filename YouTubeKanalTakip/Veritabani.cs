@@ -181,7 +181,24 @@ namespace YouTubeKanalTakip
             }
             else
             {
-                return false;
+                SQLiteCommand guncelleKomut = new SQLiteCommand("UPDATE kanallar SET kanal_adi = @adi, kanal_hit = @hit, kanal_abone=@abone,kanal_video = @video,kanal_durum = @durum WHERE kanal_id = @id",baglanti);
+                guncelleKomut.Parameters.AddWithValue("@id",id);
+                guncelleKomut.Parameters.AddWithValue("@adi",adi);
+                guncelleKomut.Parameters.AddWithValue("@hit",hit);
+                guncelleKomut.Parameters.AddWithValue("@abone",abone);
+                guncelleKomut.Parameters.AddWithValue("@video",video);
+                guncelleKomut.Parameters.AddWithValue("@durum",kanalDurum);
+
+                int sonuc = guncelleKomut.ExecuteNonQuery();
+
+                if(sonuc > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

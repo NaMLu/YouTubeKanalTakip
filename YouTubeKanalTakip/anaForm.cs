@@ -14,6 +14,8 @@ namespace YouTubeKanalTakip
     public partial class anaForm : Form
     {
         Veritabani vt = new Veritabani();
+        YouTube_sinif yt = new YouTube_sinif();
+        List<ListViewItem> item = new List<ListViewItem>();
 
         public anaForm()
         {
@@ -60,6 +62,8 @@ namespace YouTubeKanalTakip
 
         private void KanalListesiYenile()
         {
+            this.item.Clear();
+
             durumLabel.Text = "Kanal listesi yükleniyor.";
             
             if(kanallarListView.InvokeRequired)
@@ -77,12 +81,17 @@ namespace YouTubeKanalTakip
             foreach(DataRow dr in tablo.Rows)
             {
                 ListViewItem item = new ListViewItem();
+                long hit = Convert.ToInt64(dr["kanal_hit"]);
+                long abone = Convert.ToInt64(dr["kanal_abone"]);
+                long video = Convert.ToInt64(dr["kanal_video"]);
+
+
                 item.Tag = dr["kanal_resim"].ToString();
                 item.SubItems.Add(dr["kanal_adi"].ToString());
                 item.SubItems.Add(dr["kanal_id"].ToString());
-                item.SubItems.Add(dr["kanal_hit"].ToString());
-                item.SubItems.Add(dr["kanal_abone"].ToString());
-                item.SubItems.Add(dr["kanal_video"].ToString());
+                item.SubItems.Add(hit.ToString("N0"));
+                item.SubItems.Add(abone.ToString("N0"));
+                item.SubItems.Add(video.ToString("N0"));
                 item.SubItems.Add(Convert.ToBoolean(dr["kanal_durum"]) == true ? "Açık" : "Kapalı");
                 item.SubItems.Add(dr["kanal_not"].ToString());
                 item.SubItems.Add(dr["kanal_grup"].ToString());
@@ -93,6 +102,7 @@ namespace YouTubeKanalTakip
 
                 resimListesi.Images.Add(LoadImage(dr["kanal_resim"].ToString()));
                 item.ImageIndex = resimListesi.Images.Count - 1;
+                this.item.Add(item);
 
                 if (kanallarListView.InvokeRequired)
                 {
@@ -190,6 +200,88 @@ namespace YouTubeKanalTakip
         {
             topluKanalEkleForm form = new topluKanalEkleForm();
             form.ShowDialog();
+        }
+
+        private void kanalAdiAramaTextBox_TextChanged(object sender, EventArgs e)
+        {
+            String veri = kanalAdiAramaTextBox.Text;
+
+            Thread th = new Thread(() => { KanalListedeArama(veri); });
+            th.IsBackground = true;
+            th.Start();
+        }
+
+        private void KanalListedeArama(String veri)
+        {
+            if (kanallarListView.InvokeRequired)
+            {
+                kanallarListView.Invoke((MethodInvoker)delegate { kanallarListView.Items.Clear(); });
+            }
+            else
+            {
+                kanallarListView.Items.Clear();
+            }
+
+            foreach(ListViewItem eleman in this.item)
+            {
+                if(eleman.SubItems[1].Text.IndexOf(veri, StringComparison.CurrentCultureIgnoreCase) != -1)
+                {
+                    if(kanallarListView.InvokeRequired)
+                    {
+                        kanallarListView.Invoke((MethodInvoker) delegate { kanallarListView.Items.Add(eleman); });
+                    }
+                    else
+                    {
+                        kanallarListView.Items.Add(eleman);
+                    }
+                }
+            }
+        }
+
+        private void kanallarıGüncelleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread th = new Thread(TumKanallarGuncelle);
+            th.IsBackground = true;
+            th.Start();
+        }
+
+        private void TumKanallarGuncelle()
+        {
+            DataTable kanallar = vt.kanallarListesi();
+
+            foreach (DataRow dr in kanallar.Rows)
+            {
+                string id = dr["kanal_id"].ToString();
+                durumLabel.Text = id + " kanalın temel bilgileri güncelleniyor.";
+
+                if (yt.kanalEkle(true, id))
+                {
+                    int kanal = Convert.ToInt32(dr["kanal_kimlik"]);
+                    string upload = dr["kanal_upload"].ToString();
+
+                    DataTable videolar = yt.videolariGetir(upload);
+
+                    foreach (DataRow satir in videolar.Rows)
+                    {
+                        string vid = satir["id"].ToString();
+
+                        if (yt.videoEkle(vid, kanal))
+                        {
+                            durumLabel.Text = vid + " video güncellendi.";
+                        }
+                        else
+                        {
+                            durumLabel.Text = vid + " video güncellenemedi.";
+                        }
+
+                        Thread.Sleep(1);
+                    }
+                }
+
+                Thread.Sleep(1);
+            }
+
+            durumLabel.Text = "Tüm kanallar güncellendi.";
         }
     }
 }

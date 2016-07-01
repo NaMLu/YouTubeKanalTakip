@@ -55,16 +55,20 @@
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.resimListesi = new System.Windows.Forms.ImageList(this.components);
             this.sagTikMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.kanalDetayıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kanalGüncelleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kanalıSilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.kanalaGitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.kanalAdiAramaTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.sagTikMenu.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -109,7 +113,7 @@
             // topluKanalToolStripMenuItem
             // 
             this.topluKanalToolStripMenuItem.Name = "topluKanalToolStripMenuItem";
-            this.topluKanalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.topluKanalToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.topluKanalToolStripMenuItem.Text = "Toplu kanal";
             this.topluKanalToolStripMenuItem.Click += new System.EventHandler(this.topluKanalToolStripMenuItem_Click);
             // 
@@ -125,6 +129,7 @@
             this.kanallarıGüncelleToolStripMenuItem.Name = "kanallarıGüncelleToolStripMenuItem";
             this.kanallarıGüncelleToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.kanallarıGüncelleToolStripMenuItem.Text = "Kanalları güncelle";
+            this.kanallarıGüncelleToolStripMenuItem.Click += new System.EventHandler(this.kanallarıGüncelleToolStripMenuItem_Click);
             // 
             // grupToolStripMenuItem
             // 
@@ -168,7 +173,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.durumLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 472);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 556);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1065, 25);
             this.statusStrip1.TabIndex = 1;
@@ -202,12 +207,11 @@
             this.columnHeader10,
             this.columnHeader8,
             this.columnHeader11});
-            this.kanallarListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kanallarListView.FullRowSelect = true;
-            this.kanallarListView.Location = new System.Drawing.Point(0, 24);
+            this.kanallarListView.Location = new System.Drawing.Point(0, 95);
             this.kanallarListView.MultiSelect = false;
             this.kanallarListView.Name = "kanallarListView";
-            this.kanallarListView.Size = new System.Drawing.Size(1065, 448);
+            this.kanallarListView.Size = new System.Drawing.Size(1065, 458);
             this.kanallarListView.SmallImageList = this.resimListesi;
             this.kanallarListView.TabIndex = 2;
             this.kanallarListView.UseCompatibleStateImageBehavior = false;
@@ -262,6 +266,10 @@
             // 
             this.columnHeader8.Text = "Kimlik";
             // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Uploads";
+            // 
             // resimListesi
             // 
             this.resimListesi.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -298,10 +306,6 @@
             this.kanalıSilToolStripMenuItem.Text = "Kanalı sil";
             this.kanalıSilToolStripMenuItem.Click += new System.EventHandler(this.kanalıSilToolStripMenuItem_Click);
             // 
-            // columnHeader11
-            // 
-            this.columnHeader11.Text = "Uploads";
-            // 
             // kanalaGitToolStripMenuItem
             // 
             this.kanalaGitToolStripMenuItem.Name = "kanalaGitToolStripMenuItem";
@@ -309,11 +313,40 @@
             this.kanalaGitToolStripMenuItem.Text = "Kanala git";
             this.kanalaGitToolStripMenuItem.Click += new System.EventHandler(this.kanalaGitToolStripMenuItem_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.kanalAdiAramaTextBox);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(12, 27);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(351, 62);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Arama";
+            // 
+            // kanalAdiAramaTextBox
+            // 
+            this.kanalAdiAramaTextBox.Location = new System.Drawing.Point(84, 26);
+            this.kanalAdiAramaTextBox.Name = "kanalAdiAramaTextBox";
+            this.kanalAdiAramaTextBox.Size = new System.Drawing.Size(217, 24);
+            this.kanalAdiAramaTextBox.TabIndex = 1;
+            this.kanalAdiAramaTextBox.TextChanged += new System.EventHandler(this.kanalAdiAramaTextBox_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 18);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Kanal adı:";
+            // 
             // anaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1065, 497);
+            this.ClientSize = new System.Drawing.Size(1065, 581);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.kanallarListView);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -328,6 +361,8 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.sagTikMenu.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -368,6 +403,9 @@
         private System.Windows.Forms.ToolStripMenuItem listeyiYenileToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.ToolStripMenuItem kanalaGitToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox kanalAdiAramaTextBox;
     }
 }
 
