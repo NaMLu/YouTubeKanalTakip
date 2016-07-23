@@ -111,5 +111,33 @@ namespace YouTubeKanalTakip
                 }
             }
         }
+
+        private void grubuSilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (gruplarListView.SelectedItems.Count > 0)
+            {
+                ListViewItem item = gruplarListView.SelectedItems[0];
+
+                int kimlik = Convert.ToInt32(item.Tag);
+                string isim = item.Text;
+
+                if(MessageBox.Show(isim + " isimli grubu silmek istediğinize emin misiniz ?","Uyarı !",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    if(vt.grupSil(kimlik))
+                    {
+                        MessageBox.Show(isim + " isimli grup başarıyla silindi.","Uyarı !");
+                        GrupListesiYenile();
+                    }
+                    else
+                    {
+                        MessageBox.Show(isim + " isimli grup silinemedi.","Uyarı !");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Öncelikle bir grup seçmelisiniz.");
+            }
+        }
     }
 }

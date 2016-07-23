@@ -108,6 +108,14 @@ namespace YouTubeKanalTakip
             }
         }
 
+        public bool grupSil(int kimlik)
+        {
+            SQLiteCommand grupSilKomut = new SQLiteCommand("DELETE FROM gruplar WHERE grup_kimlik = @grup_kimlik",baglanti);
+            grupSilKomut.Parameters.AddWithValue("@grup_kimlik",kimlik);
+
+            return grupSilKomut.ExecuteNonQuery() > 0;
+        }
+
         public bool grupGuncelle(int id, string grupAdi)
         {
             SQLiteCommand grupGuncelle = new SQLiteCommand("UPDATE gruplar SET grup_ismi = @isim WHERE grup_kimlik = @id", baglanti);

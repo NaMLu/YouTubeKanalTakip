@@ -179,7 +179,7 @@
             this.grubuGüncelleToolStripMenuItem,
             this.grubuSilToolStripMenuItem});
             this.sagTikMenu.Name = "sagTikMenu";
-            this.sagTikMenu.Size = new System.Drawing.Size(156, 48);
+            this.sagTikMenu.Size = new System.Drawing.Size(156, 70);
             // 
             // grubuGüncelleToolStripMenuItem
             // 
@@ -193,6 +193,7 @@
             this.grubuSilToolStripMenuItem.Name = "grubuSilToolStripMenuItem";
             this.grubuSilToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.grubuSilToolStripMenuItem.Text = "Grubu sil";
+            this.grubuSilToolStripMenuItem.Click += new System.EventHandler(this.grubuSilToolStripMenuItem_Click);
             // 
             // grupForm
             // 
